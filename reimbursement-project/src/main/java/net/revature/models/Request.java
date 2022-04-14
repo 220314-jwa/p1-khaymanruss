@@ -1,5 +1,6 @@
 package net.revature.models;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ public class Request {
 	private String description;
 	private String location;
 	private Date submitted_at;
+	private String grade;
 	
 	public Request() {
 		request_id = 0;
@@ -26,6 +28,7 @@ public class Request {
 		description = "";
 		location = "";
 		submitted_at = new Date();
+		grade = "";
 		
 	}
 	
@@ -100,13 +103,13 @@ public class Request {
 	public String toString() {
 		return "Request [request_id=" + request_id + ", employee_id=" + employee_id + ", event_type_id=" + event_type_id
 				+ ", status_id=" + status_id + ", event_date=" + event_date + ", cost=" + cost + ", description="
-				+ description + ", location=" + location + ", submitted_at=" + submitted_at + "]";
+				+ description + ", location=" + location + ", submitted_at=" + submitted_at + ", grade=" + grade + "]";
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(cost, description, employee_id, event_date, event_type_id, location, request_id, status_id,
-				submitted_at);
+		return Objects.hash(cost, description, employee_id, event_date, event_type_id, grade, location, request_id,
+				status_id, submitted_at);
 	}
 
 	@Override
@@ -120,8 +123,18 @@ public class Request {
 		Request other = (Request) obj;
 		return cost == other.cost && Objects.equals(description, other.description) && employee_id == other.employee_id
 				&& Objects.equals(event_date, other.event_date) && event_type_id == other.event_type_id
-				&& Objects.equals(location, other.location) && request_id == other.request_id
-				&& status_id == other.status_id && Objects.equals(submitted_at, other.submitted_at);
+				&& Objects.equals(grade, other.grade) && Objects.equals(location, other.location)
+				&& request_id == other.request_id && status_id == other.status_id
+				&& Objects.equals(submitted_at, other.submitted_at);
+	}
+
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 }

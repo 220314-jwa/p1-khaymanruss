@@ -1,5 +1,8 @@
 package net.revature.services;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import com.revature.exceptions.IncorrectCredentialsException;
 import com.revature.exceptions.RequestAlreadySubmittedException;
 
@@ -30,29 +33,78 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
-	
+	/*
 	@Override
-	public int submitRequest(Request newRequest) throws RequestAlreadySubmittedException {
+	public Request submitRequest(Request requestToSubmit) throws RequestAlreadySubmittedException {
+		requestToSubmit = requestDAO.getById(requestToSubmit.getRequest_id());
+		//we want to submit request
+		//also want to make sure the request hasnt already been submitted
+		if(requestToSubmit.getStatus_id() == (0)) {
+			System.out.println("No request was submitted");
+			//throw new RequestAlreadySubmittedException();
+		}else {
+			//check employee to make sure the account is valid
+			//employee = employeeDAO.getById(employee.getemployee_id());
+			//if(employee != null) {
+			if(requestToSubmit != null) {
+				
+			requestToSubmit.setStatus_id(1);
+			//this is where she added user.getPets which was a field of her user
+			//maybe add something for request for employee?
+			try {
+				requestDAO.update(requestToSubmit);
+			}
+			
+		}finally {
+			System.out.println("request has been submitted?");
+		}
 		
-		return requestDAO.create(newRequest);
+		return requestToSubmit;
 	}
-
 	
-	@Override
+*/
+	
+	/*@Override
 	public Status updateRequestStatus(Status statusToUpdate) {
 		if(statusDAO.getById(statusToUpdate.getStatus_id()) != null){
 			statusDAO.update(statusToUpdate);
 			statusToUpdate = statusDAO.getById(statusToUpdate.getStatus_id());
 			return statusToUpdate;
 		}
-		return null;
+		return statusToUpdate;
+	}*/
+
+
+
+
+	@Override
+	public List<Request> viewRequests() {
+		List<Request> requests = requestDAO.getAll();
+		return requests;
 	}
 
 
 	@Override
-	public Request getRequest(int request_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Request editRequest(Request requestToEdit) {
+		Request request = requestDAO.getById(requestToEdit.getRequest_id());
+		if(request != null) {
+			requestDAO.update(requestToEdit);
+			return requestDAO.getById(requestToEdit.getRequest_id());
+		}
+		return request;
 	}
 
+	@Override
+	public Request submitRequest(Request newRequest) throws RequestAlreadySubmittedException {
+		int request_id = requestDAO.create(newRequest);
+		if(request_id != 0) {
+			newRequest.setRequest_id(request_id);
+			return newRequest;
+		}else {
+			throw new RequestAlreadySubmittedException();
+		}
+		
+	}
+
+	
 }

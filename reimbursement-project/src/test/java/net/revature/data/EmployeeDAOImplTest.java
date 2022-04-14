@@ -7,12 +7,11 @@ import java.util.Random;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
 
 import net.revature.models.Employee;
 
-@TestMethodOrder(OrderAnnotation.class)
+
 class EmployeeDAOImplTest {
 	private static EmployeeDAO employeeDAO = DAOFactory.getEmployeeDAO();
 	private static Employee testEmployee = new Employee();
@@ -21,13 +20,25 @@ class EmployeeDAOImplTest {
 	@BeforeAll
 	public static void setUp() {
 		testEmployee.setfirst_name("test");
+		testEmployee.setUsername("test1");
 		Random rand = new Random();
-		testNewEmployee.setfirst_name("test_" + rand.nextLong());
+		testNewEmployee.setfirst_name("test" + rand.nextLong());
 		testEmployee.setemployee_id(employeeDAO.create(testEmployee));
 	}
 	@AfterAll
 	public static void cleanUp() {
 		employeeDAO.delete(testEmployee);
+	}
+	
+	@Test
+	public void createEmployeeSuccessfully() {
+		int id = employeeDAO.create(testNewEmployee);
+		testNewEmployee.setemployee_id(id);
+		assertNotEquals(0, id);
+	}
+	@Test
+	public void getAll() {
+		assertNotNull(employeeDAO.getAll());
 	}
 	
 	@Test
@@ -45,6 +56,34 @@ class EmployeeDAOImplTest {
 		assertNull(employee);
 	}
 	
-	
+	@Test
+	public void getByUsernameExists() {
+		Employee employee = employeeDAO.getByUsername("test1");
+		assertEquals(testEmployee, employee);
+	}
 
+	@Test
+	public void getByUsernameDoesNotExist() {
+		Employee employee = employeeDAO.getByUsername("wrongonedummy");
+	}
+	
+	@Test
+	public void updateEmployeeExists() {
+		assertDoesNotThrow(() ->{
+			employeeDAO.update(testEmployee);
+		});
+	}
+	
+	@Test
+	public void deleteEmployeeExists() {
+		assertDoesNotThrow(() -> {
+			employeeDAO.delete(testEmployee);
+		});
+	}
+	
+	@Test
+	public void getByEmployee_idExists() {
+		Employee employee = employeeDAO.getByEmployee_id("test1");
+		assertEquals(testEmployee, employee);
+	}
 }

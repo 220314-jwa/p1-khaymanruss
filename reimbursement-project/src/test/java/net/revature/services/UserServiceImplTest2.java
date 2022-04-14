@@ -1,14 +1,21 @@
 package net.revature.services;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.sql.SQLException;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.revature.exceptions.IncorrectCredentialsException;
@@ -17,6 +24,7 @@ import net.revature.data.EmployeeDAO;
 import net.revature.data.RequestDAO;
 import net.revature.data.StatusDAO;
 import net.revature.models.Employee;
+import net.revature.models.Request;
 
 @ExtendWith(MockitoExtension.class) 
 class UserServiceImplTest2 {
@@ -57,19 +65,83 @@ class UserServiceImplTest2 {
 		
 	}
 
+	/*
 	@Test
-	void testSubmitRequest() {
-		System.out.println("TEST WORKS HOE");
+	public void SubmitRequestSuccessfully() throws Exception{
+		//Employee testEmployee = new Employee();
+		Request testRequest = new Request();
+		testRequest.setRequest_id(1);
+		
+		
+		when(requestDAO.getById(testRequest.getRequest_id())).thenReturn(testRequest);
+		//when(employeeDAO.getById(testEmployee.getemployee_id())).thenReturn(testEmployee);
+		
+		doNothing().when(requestDAO).update(any(Request.class));
+		Request result = userServ.submitRequest(testRequest);
+		//doNothing().when(employeeDAO).update(any(Employee.class));
+		//doNothing().when(requestDAO).updateRequest(testRequest.getRequest_id(), testEmployee.getemployee_id());
+		//Employee result = userServ.submitRequest(testEmployee, testRequest);
+		
+		testRequest.setStatus_id(1);
+		
+		verify(requestDAO, times(1)).update(testRequest);
+		
+		
+		
+		
+	}*/
+	@Test
+	public void submitRequestAlreadyExists() throws SQLException {
+		//Employee testEmployee = new Employee();
+		Request testRequest = new Request();
+		testRequest.setStatus_id(1);
+		
+		//when(requestDAO.getById(testRequest.getRequest_id())).thenReturn(testRequest);
+		
+		assertThrows(Exception.class, () -> {
+			userServ.submitRequest(testRequest);
+		});
+		verify(requestDAO, never()).update(any(Request.class));
 	}
 
 	@Test
-	void testGetRequestByrequest_id() {
-		fail("Not yet implemented");
+	public void viewRequestsSuccessfully() {
+		List<Request> requests = userServ.viewRequests();
+		assertNotNull(requests);
 	}
 
 	@Test
-	void testUpdateRequestStatus() {
-		fail("Not yet implemented");
+	public void editRequestSuccessfully() {
+		Request testRequest = new Request();
+		testRequest.setRequest_id(2);
+		testRequest.setGrade("A");
+		
+		when(requestDAO.getById(2)).thenReturn(testRequest);
+		doNothing().when(requestDAO).update(Mockito.any(Request.class));
+		
+		Request actualRequest = userServ.editRequest(testRequest);
+		assertEquals(testRequest, actualRequest);
+	}
+	
+	@Test
+	public void editRequestDoesNotExist() {
+		when(requestDAO.getById(2)).thenReturn(null);
+		
+		Request testRequest = new Request();
+		testRequest.setRequest_id(2);
+		
+		Request actualRequest = userServ.editRequest(testRequest);
+		
+		assertNull(actualRequest);
+		verify(requestDAO, times(0)).update(Mockito.any(Request.class));
 	}
 
+	@Test
+	public void SubmitRequestSuccessfully() throws Exception{
+		Request testRequest = new Request();
+		when(requestDAO.create(testRequest)).thenReturn(1);
+		
+		Request result = userServ.submitRequest(testRequest);
+		assertNotEquals(0, result.getRequest_id());
+	}
 }

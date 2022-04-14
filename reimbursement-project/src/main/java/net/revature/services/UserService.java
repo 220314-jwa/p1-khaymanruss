@@ -1,5 +1,7 @@
 package net.revature.services;
 
+import java.util.List;
+
 import com.revature.exceptions.IncorrectCredentialsException;
 import com.revature.exceptions.RequestAlreadySubmittedException;
 
@@ -20,7 +22,7 @@ public interface UserService {
 	 */
 
 	
-	public int submitRequest(Request newRequest) throws RequestAlreadySubmittedException;
+	public Request submitRequest(Request newRequest) throws RequestAlreadySubmittedException;
 	/**
 	 * Allows employee to submit request
 	 * 
@@ -29,14 +31,14 @@ public interface UserService {
 	 * @return status_id
 	 */
 
-	public Request getRequest(int request_id);
+	public List<Request> viewRequests();
 	/**
 	 * 
 	 * @param request_id
 	 * @return request with the request_id
 	 */
 
-	public Status updateRequestStatus(Status statusToUpdate);
+	//public Status updateRequestStatus(Status statusToUpdate);
 	/**
 	 * 
 	 * @param request
@@ -45,5 +47,5 @@ public interface UserService {
 	 * 
 	 */
 	
-	
+	public Request editRequest(Request requestToEdit);
 }

@@ -2,63 +2,85 @@ package net.revature.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
+import java.util.Random;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import net.revature.models.Employee;
-import net.revature.models.EventType;
-import net.revature.models.Status;
+//import net.revature.models.Employee;
+//import net.revature.models.EventType;
+import net.revature.models.Request;
+//import net.revature.models.Status;
 
 @ExtendWith(MockitoExtension.class)
 class RequestDAOImplTest {
-	private RequestDAO requestDAO = new RequestDAOImpl();
-	private StatusDAO statusDAO = new StatusDAOImpl();
-	private EmployeeDAO employeeDAO = new EmployeeDAOImpl();
-	private EventTypeDAO eventTypeDAO = new EventTypeDAOImpl();
-	private DepartmentDAO departmentDAO = new DepartmentDAOImpl();
-	
-	private static int request_id;
-	private static Employee employee_id;
-	private static EventType event_type_id;
-	private static Status status;
-	
-	
-	
 
+	private static RequestDAO requestDAO = DAOFactory.getRequestDAO();
+	private static Request testRequest = new Request();
+	private static Request testNewRequest = new Request();
+	
 	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	static void setUpBeforeClass(){
+		testRequest.setEmployee_id(123);
+		Random rand = new Random();
+		testNewRequest.setRequest_id(123 + rand.nextInt());
+		testRequest.setRequest_id(requestDAO.create(testRequest));
 	}
+	@AfterAll
+	public static void cleanup() throws SQLException{
+		requestDAO.delete(testRequest);
+	}
+	
 
 	@Test
+	@Disabled
 	void testRequestDAOImpl() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testCreate() {
-		fail("Not yet implemented");
+	public void createRequestSuccessfully() {
+		int id = requestDAO.create(testNewRequest);
+		testNewRequest.setRequest_id(id);
+		
+		assertNotEquals(0, id);
 	}
 
 	@Test
-	void testGetById() {
-		fail("Not yet implemented");
+	public void getByIdExists() {
+		int id = testRequest.getRequest_id();
+		Request request = requestDAO.getById(id);
+		assertEquals(testRequest, request);
 	}
 
 	@Test
-	void testGetAll() {
-		fail("Not yet implemented");
+	public void getByIdDoesNotExist() {
+		Request request = requestDAO.getById(0);
+		assertNull(request);
+	}
+	
+	@Test
+	public void GetAll() {
+		assertNotNull(requestDAO.getAll());
 	}
 
 	@Test
-	void testUpdate() {
-		fail("Not yet implemented");
+	public void updateRequestExists() {
+		assertDoesNotThrow(() ->{
+			requestDAO.update(testRequest);
+		});
 	}
 
 	@Test
-	void testDelete() {
-		fail("Not yet implemented");
+	public void deleteRequestExists() {
+		assertDoesNotThrow(() -> {
+			requestDAO.delete(testRequest);
+		});
 	}
 
 }

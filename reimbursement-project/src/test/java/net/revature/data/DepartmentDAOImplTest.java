@@ -26,17 +26,16 @@ class DepartmentDAOImplTest {
 	}
 	@AfterAll
 	public static void cleanUp() throws SQLException {
-		// TODO remove pets in DB with name containing "test"
+		
 		departmentDAO.delete(testDept);
 	}
-	@Test
-	void testDepartmentDAOImpl() {
-		fail("Not yet implemented");
-	}
-
+/*
 	@Test
 	public void create() {
-		fail("Not yet implemented");
+		//want to get the newObj(dept) dept_id 
+		//assertNotNull? assertNotEquals?
+		Department department = new Department();
+		assertNotEquals(0, departmentDAO.create(department));
 	}
 
 	@Test
@@ -48,7 +47,7 @@ class DepartmentDAOImplTest {
 	@Test
 	public void testGetByDept_name() {
 		Department department = departmentDAO.getByDept_name("thisguy");
-		assertNull(testDept);
+		assertNotNull(testDept);
 	}
 
 	@Test
@@ -56,10 +55,12 @@ class DepartmentDAOImplTest {
 		Department department = departmentDAO.getByDept_head_id(1234);
 		assertNull(testDept);
 	}
-
+*/
 	@Test
-	void testGetById() {
-		fail("Not yet implemented");
+	public void getByIdExists() {
+		int id = testDept.getDept_id();
+		Department department = departmentDAO.getById(id);
+		assertEquals(testDept, department);
 	}
 
 }

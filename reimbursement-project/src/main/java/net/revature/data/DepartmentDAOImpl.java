@@ -29,9 +29,9 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStatement.setInt(1, newObj.getDept_head_id());
-			preparedStatement.setString(2, newObj.getDept_name());
-			preparedStatement.setInt(3, newObj.getDept_head_id());
+			//preparedStatement.setInt(1, newObj.getDept_id());
+			preparedStatement.setString(1, newObj.getDept_name());
+			preparedStatement.setInt(2, newObj.getDept_head_id());
 			
 			int count = preparedStatement.executeUpdate();
 			
@@ -41,8 +41,9 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 				System.out.println("This is your Department");
 				resultSet.next();
 				int dept_id = resultSet.getInt(1);
-				newObj.setDept_id(dept_id);
-				connection.commit();
+				//newObj.setDept_id(dept_id);
+				//connection.commit();
+				return dept_id;
 			}
 			else {
 				System.out.println("Department has not been created.");
@@ -50,12 +51,7 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			try {
-				connection.rollback();
-			}catch (SQLException e1) {
-				e1.printStackTrace();
-				
-			}
+			
 		} finally {
 			try {
 				connection.close();
@@ -63,7 +59,7 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 				e.printStackTrace();
 			}
 		}
-		return newObj.getDept_head_id();
+		return newObj.getDept_id();
 	}
 
 	
@@ -124,13 +120,21 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
-				return department;
+				department = parseResultSet(resultSet);
 			}else {
 				System.out.println("Cant get Dept");	
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return department;
+	}
+
+	private Department parseResultSet(ResultSet resultSet)  throws SQLException{
+		Department department = new Department();
+		department.setDept_id(resultSet.getInt(1));
+		department.setDept_name(resultSet.getString(2));
+		department.setDept_head_id(resultSet.getInt(3));
 		return department;
 	}
 
@@ -145,7 +149,7 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
-				return department;
+				department = parseResultSet(resultSet);
 			}else {
 				System.out.println("Cant get Dept");
 			}

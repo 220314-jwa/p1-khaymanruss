@@ -11,9 +11,9 @@ import java.util.ResourceBundle;
 public class ConnectionFactory {
 	
 
-	private static ConnectionFactory connectionFactory = null;
-	private static Properties properties;
-	//private static Connection connection = null;
+	//private static ConnectionFactory connectionFactory = null;
+	//private static Properties properties;
+	private static Connection connection = null;
 	
 	/*private ConnectionFactory() {
 		properties = new Properties();
@@ -47,7 +47,7 @@ public class ConnectionFactory {
 	}
 }
 */
-	private ConnectionFactory() {
+	/*private ConnectionFactory() {
 		InputStream stream = ConnectionFactory.class.getClassLoader().getResourceAsStream("dbConfig.properties");
 		try {
 			properties = new Properties();
@@ -55,14 +55,14 @@ public class ConnectionFactory {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-	}
-	public static ConnectionFactory getConnectionFactory() {
+	}*/
+	/*public static ConnectionFactory getConnectionFactory() {
 		if(connectionFactory==null) connectionFactory = new ConnectionFactory();
 		return connectionFactory;
-	}
+	}*/
 	public static Connection getConnection() {
-		Connection connection = null;
-		//if (connection == null) {
+		//Connection connection = null;
+		if (connection == null) {
 		String url = "jdbc:postgresql://localhost:5432/postgres"; 
 		String username = "postgres";
 		String password = "Tampabay-7";
@@ -80,7 +80,10 @@ public class ConnectionFactory {
 			catch (SQLException e) {
 				e.printStackTrace();
 			}
-		
+		}
 		return connection;
-	}
+		}
 }
+	
+
+

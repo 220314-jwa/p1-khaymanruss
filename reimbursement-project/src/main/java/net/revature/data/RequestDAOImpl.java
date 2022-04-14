@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,18 +24,19 @@ public class RequestDAOImpl implements RequestDAO {
 
 	@Override
 	public int create(Request newObj) {
-		String sql = "INSERT into Request (request_id, employee_id, event_type_id, status_id, event_date, cost, description, location, submitted_at)" +
-				"values (default, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT into reimbursement_request (request_id, employee_id, event_type_id, status_id, event_date, cost, description, location, submitted_at, grade)" +
+				"values (default,?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			//create a prepared statement and pass in the sql command
 			//also the return generated keys flag so that we can get that id that is generated
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			//set the fields
-			preparedStatement.setTimestamp(4, (Timestamp) newObj.getEvent_date());
+			preparedStatement.setDate(4, new java.sql.Date(newObj.getEvent_date().getTime()));
 			preparedStatement.setLong(5, newObj.getCost());
 			preparedStatement.setString(6, newObj.getDescription());
 			preparedStatement.setString(7, newObj.getLocation());
-			preparedStatement.setTimestamp(8, (Timestamp) newObj.getEvent_date());
+			preparedStatement.setDate(8, new java.sql.Date(newObj.getSubmitted_at().getTime()));
+			preparedStatement.setString(9, newObj.getGrade());
 			//instantiating employeeDAO into Request
 			EmployeeDAO employeeDAO = DAOFactory.getEmployeeDAO();
 			//passing in the employeeDAO username string and returning the int employee_id
@@ -53,7 +55,7 @@ public class RequestDAOImpl implements RequestDAO {
 				System.out.println("Request has been added");
 				resultSet.next();
 				int id = resultSet.getInt(1);
-				newObj.setEmployee_id(id);;
+				newObj.setRequest_id(id);;
 				connection.commit();
 			}
 			else {
@@ -81,7 +83,11 @@ public class RequestDAOImpl implements RequestDAO {
 	public Request getById(int Request_id) {
 		Request request = null;
 		
-		String sql = "SELECT * FROM Request WHERE request_id = ?";
+		String sql = "SELECT request_id, event_date, cost, description, location, submitted_at, grade FROM reimbursement_request" +
+		"left join employee_id on employee.id=employee.employee_id" +
+		"left join event_type_id on event_type.id=event_type.event_type_id" +
+		"left join status_id on status.id=request_status.status_id" +
+		"WHERE request_id = ?";
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -128,6 +134,7 @@ public class RequestDAOImpl implements RequestDAO {
 		request.setDescription(resultSet.getString(6));
 		request.setLocation(resultSet.getString(7));
 		request.setSubmitted_at(resultSet.getDate(8));
+		request.setGrade(resultSet.getString(9));
 		return request;
 
 	}
@@ -144,12 +151,13 @@ public class RequestDAOImpl implements RequestDAO {
 			preparedStatement.setInt(2, updateObj.getEvent_type_id());
 			StatusDAO statusDAO = DAOFactory.getStatusDAO();
 			preparedStatement.setInt(3, updateObj.getStatus_id());
-			preparedStatement.setTimestamp(4, (Timestamp) updateObj.getEvent_date());
-			//local date java.util
+			preparedStatement.setDate(4, new java.sql.Date(updateObj.getEvent_date().getTime()));
+			//might be bad that i commented this out. just trying. nvm
 			preparedStatement.setLong(5, updateObj.getCost());
 			preparedStatement.setString(6, updateObj.getDescription());
 			preparedStatement.setString(7, updateObj.getDescription());
-			preparedStatement.setTimestamp(8, (Timestamp) updateObj.getSubmitted_at());
+			preparedStatement.setDate(8, new java.sql.Date(updateObj.getSubmitted_at().getTime()));
+			preparedStatement.setString(9, updateObj.getGrade());
 			
 			connection.setAutoCommit(false);
 			

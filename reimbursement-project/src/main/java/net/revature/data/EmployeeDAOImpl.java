@@ -23,8 +23,8 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	public int create(Employee newObj) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			String sql = "INSERT int employee (employee_id, username, password, first_name, last_name, manager_id, dept_id)"
-					+ " values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT into employee (employee_id, username, password, first_name, last_name, manager_id, dept_id)"
+					+ " values (default, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, newObj.getUsername());
 			preparedStatement.setString(2,  newObj.getPassword());
@@ -39,7 +39,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 			ResultSet resultSet = preparedStatement.getGeneratedKeys();
 			
 			if(resultSet.next()) {
-				newObj.setemployee_id(resultSet.getInt(0));
+				newObj.setemployee_id(resultSet.getInt(1));
 				connection.commit();
 			}else {
 				connection.rollback();
@@ -66,7 +66,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	public Employee getById(int employee_id) {
 		Employee employee = null;
 		try(Connection connection = ConnectionFactory.getConnection()){
-			String sql = "SELECT * from employee WHERE employee_id = ?";
+			String sql = "SELECT * from employee left join dept_id on department.id=department.dept_id WHERE employee_id = ?";
 					//research foreign keys in relation to request_id and employee_id as primary keys\
 					//refer to her postgresSQL table pet_owner and how it references the person and pet primary keys
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -197,7 +197,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	public Employee getByEmployee_id(String username) {
 		Employee employee = null;
 		try(Connection connection = ConnectionFactory.getConnection()){
-			String sql = "SELECT * from employee WHERE employee_username = ?";
+			String sql = "SELECT * from employee left join dept_id on department.id=department.dept_id WHERE employee_username = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, username);
 			
@@ -225,7 +225,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	public int getByUsername(int employee_id) {
 		Employee employee = null;
 				try(Connection connection = ConnectionFactory.getConnection()){
-					String sql = "Select * from employee where username = ?";
+					String sql = "Select * from employee left join dept_id on department.id=department.dept_id where username = ?";
 					PreparedStatement preparedStatement = connection.prepareStatement(sql);
 					preparedStatement.setInt(0, employee_id);
 					
@@ -255,7 +255,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	public Employee getByUsername(String username) {
 		Employee employee = null;
 		try(Connection connection = ConnectionFactory.getConnection()){
-			String sql = "Select * from employee where username = ?";
+			String sql = "Select * from employee left join dept_id on department.id=department.dept_id where username = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(3, username);
 			
