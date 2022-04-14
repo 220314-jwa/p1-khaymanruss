@@ -36,4 +36,3 @@ jobs:
         run: |
          cd trms-back/
          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=220314-jwa_p1-khaymanruss
-        
