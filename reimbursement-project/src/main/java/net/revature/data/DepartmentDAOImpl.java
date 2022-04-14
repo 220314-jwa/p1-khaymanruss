@@ -30,8 +30,8 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			//preparedStatement.setInt(1, newObj.getDept_id());
-			preparedStatement.setString(1, newObj.getDept_name());
-			preparedStatement.setInt(2, newObj.getDept_head_id());
+			preparedStatement.setString(1, newObj.getDeptName());
+			preparedStatement.setInt(2, newObj.getDeptHeadId());
 			
 			int count = preparedStatement.executeUpdate();
 			
@@ -40,10 +40,10 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 			if(count > 0) {
 				System.out.println("This is your Department");
 				resultSet.next();
-				int dept_id = resultSet.getInt(1);
+				int deptId = resultSet.getInt(1);
 				//newObj.setDept_id(dept_id);
 				//connection.commit();
-				return dept_id;
+				return deptId;
 			}
 			else {
 				System.out.println("Department has not been created.");
@@ -59,43 +59,43 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 				e.printStackTrace();
 			}
 		}
-		return newObj.getDept_id();
+		return newObj.getDeptId();
 	}
 
 	
 	@Override
-	public int getByDept_id(int dept_id) {
+	public int getByDeptId(int deptId) {
 		Department department = null;
 		String sql = "SELECT * FROM Department WHERE dept_id = ?";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, dept_id);
+			preparedStatement.setInt(1, deptId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
 				
-				return dept_id;}
+				return deptId;}
 				else {
 					System.out.println("Cant get Dept");
-					return dept_id;
+					return deptId;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-			return dept_id;
+			return deptId;
 		
 	}
 
 
 	@Override
-	public Department getByDept_name(String dept_name) {
+	public Department getByDeptName(String deptName) {
 		Department department = null;
 		String sql = "SELECT * FROM Department WHERE dept_name = ?";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, dept_name);
+			preparedStatement.setString(1, deptName);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if (resultSet.next()) {
@@ -110,13 +110,13 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 	}
 
 	@Override
-	public Department getByDept_head_id(int dept_head_id) {
+	public Department getByDeptHeadId(int deptHeadId) {
 		Department department = null;
 		String sql = "SELECT * FROM Department WHERE Dept_head_id = ?";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, dept_head_id);
+			preparedStatement.setInt(1, deptHeadId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -132,20 +132,20 @@ public class DepartmentDAOImpl implements DepartmentDAO{
 
 	private Department parseResultSet(ResultSet resultSet)  throws SQLException{
 		Department department = new Department();
-		department.setDept_id(resultSet.getInt(1));
-		department.setDept_name(resultSet.getString(2));
-		department.setDept_head_id(resultSet.getInt(3));
+		department.setDeptId(resultSet.getInt(1));
+		department.setDeptName(resultSet.getString(2));
+		department.setDeptHeadId(resultSet.getInt(3));
 		return department;
 	}
 
 	@Override
-	public Department getById(int dept_id) {
+	public Department getById(int deptId) {
 		Department department = null;
 		String sql = "SELECT * FROM Department WHERE dept_id = ?";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, dept_id);
+			preparedStatement.setInt(1, deptId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {

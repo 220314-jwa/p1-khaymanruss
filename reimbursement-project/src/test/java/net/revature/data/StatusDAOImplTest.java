@@ -19,10 +19,10 @@ class StatusDAOImplTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() {
-		testStatus.setStatus_name("test");
+		testStatus.setStatusName("test");
 		Random rand = new Random();
-		testNewStatus.setStatus_name("test" + rand.nextLong());
-		testStatus.setStatus_id(statusDAO.create(testStatus));
+		testNewStatus.setStatusName("test" + rand.nextLong());
+		testStatus.setStatusId(statusDAO.create(testStatus));
 	}
 	@AfterAll
 	public static void cleanUp() throws SQLException{
@@ -31,7 +31,7 @@ class StatusDAOImplTest {
 
 	@Test
 	public void getByStatusIdExists() {
-		int id = testStatus.getStatus_id();
+		int id = testStatus.getStatusId();
 		Status status = statusDAO.getById(id);
 		assertEquals(testStatus, status);
 	}

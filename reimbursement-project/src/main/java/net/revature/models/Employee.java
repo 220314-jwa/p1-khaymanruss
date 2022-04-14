@@ -5,56 +5,59 @@ import java.util.Objects;
 public class Employee {
 	
 
-	private int employee_id;
+	
+
+
+	private int employeeId;
 	private String username;
 	private String password;
-	private String first_name;
-	private String last_name;
-	private int manager_id;
-	private int dept_id;
+	private String firstName;
+	private String lastName;
+	private int managerId;
+	private int deptId;
 	
 	
 	public Employee() {
-		employee_id = 0;
+		employeeId = 0;
 		username = "khayman";
 		password = "pass";
-		first_name = "";
-		last_name = "";
-		manager_id = 0;
-		dept_id = 0;
+		firstName = "";
+		lastName = "";
+		managerId = 0;
+		deptId = 0;
 		
 	}
 	
 
-	public int getemployee_id() {
-		return employee_id;
+	public int getemployeeId() {
+		return employeeId;
 	}
-	public void setemployee_id(int employee_id) {
-		this.employee_id = employee_id;
+	public void setemployeeId(int employeeId) {
+		this.employeeId = employeeId;
 	}
-	public String getfirst_name() {
-		return first_name;
+	public String getfirstName() {
+		return firstName;
 	}
-	public void setfirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setfirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public String getlast_name() {
-		return last_name;
+	public String getlastName() {
+		return lastName;
 	}
-	public void setlast_name(String last_name) {
-		this.last_name = last_name;
+	public void setlastName(String lastName) {
+		this.lastName = lastName;
 	}
-	public int getmanager_id() {
-		return manager_id;
+	public int getmanagerId() {
+		return managerId;
 	}
-	public void setmanager_id(int manager_id) {
-		this.manager_id = manager_id;
+	public void setmanagerId(int managerId) {
+		this.managerId = managerId;
 	}
-	public int getdept_id() {
-		return dept_id;
+	public int getdeptId() {
+		return deptId;
 	}
-	public void setdept_id(int dept_id) {
-		this.dept_id = dept_id;
+	public void setdeptId(int deptId) {
+		this.deptId = deptId;
 	}
 
 
@@ -77,19 +80,19 @@ public class Employee {
 		this.password = password;
 	}
 	
+	
 	@Override
 	public String toString() {
-		return "Employee [employee_id=" + employee_id + ", username=" + username + ", password=" + password
-				+ ", first_name=" + first_name + ", last_name=" + last_name + ", manager_id=" + manager_id
-				+ ", dept_id=" + dept_id + "]";
+		return "Employee [employeeId=" + employeeId + ", username=" + username + ", password=" + password
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", managerId=" + managerId + ", deptId="
+				+ deptId + "]";
 	}
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(dept_id, employee_id, first_name, last_name, manager_id, password, username);
+		return Objects.hash(deptId, employeeId, firstName, lastName, managerId, password, username);
 	}
-
-
-
 
 
 	@Override
@@ -101,9 +104,9 @@ public class Employee {
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
-		return dept_id == other.dept_id && employee_id == other.employee_id
-				&& Objects.equals(first_name, other.first_name) && Objects.equals(last_name, other.last_name)
-				&& manager_id == other.manager_id && Objects.equals(password, other.password)
-				&& Objects.equals(username, other.username);
+		return deptId == other.deptId && employeeId == other.employeeId && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(lastName, other.lastName) && managerId == other.managerId
+				&& Objects.equals(password, other.password) && Objects.equals(username, other.username);
 	}
+
 }

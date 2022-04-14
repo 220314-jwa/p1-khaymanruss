@@ -7,27 +7,27 @@ import java.util.Objects;
 public class Request {
 
 
-	private int request_id;
-	private int employee_id;
-	private int event_type_id;
-	private int status_id;
-	private Date event_date;
+	private int requestId;
+	private int employeeId;
+	private int eventTypeId;
+	private int statusId;
+	private Date eventDate;
 	private long cost;
 	private String description;
 	private String location;
-	private Date submitted_at;
+	private Date submittedAt;
 	private String grade;
 	
 	public Request() {
-		request_id = 0;
-		employee_id = 0;
-		event_type_id = 0;
-		status_id = 0;
-		event_date = new Date();
+		requestId = 0;
+		employeeId = 0;
+		eventTypeId = 0;
+		statusId = 0;
+		eventDate = new Date();
 		cost = 0;
 		description = "";
 		location = "";
-		submitted_at = new Date();
+		submittedAt = new Date();
 		grade = "";
 		
 	}
@@ -51,65 +51,73 @@ public class Request {
 		this.cost = cost;
 	}
 
-	public int getRequest_id() {
-		return request_id;
+	public int getRequestId() {
+		return requestId;
 	}
 
-	public void setRequest_id(int request_id) {
-		this.request_id = request_id;
+	public void setRequestId(int requestId) {
+		this.requestId = requestId;
 	}
 
-	public int getEmployee_id() {
-		return employee_id;
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setEmployee_id(int employee_id) {
-		this.employee_id = employee_id;
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
 	}
 
-	public int getEvent_type_id() {
-		return event_type_id;
+	public int getEventTypeId() {
+		return eventTypeId;
 	}
 
-	public void setEvent_type_id(int event_type_id) {
-		this.event_type_id = event_type_id;
+	public void setEventTypeId(int eventTypeId) {
+		this.eventTypeId = eventTypeId;
 	}
 
-	public int getStatus_id() {
-		return status_id;
+	public int getStatusId() {
+		return statusId;
 	}
 
-	public void setStatus_id(int status_id) {
-		this.status_id = status_id;
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
-	public Date getEvent_date() {
-		return event_date;
+	public Date getEventDate() {
+		return eventDate;
 	}
 
-	public void setEvent_date(Date event_date) {
-		this.event_date = event_date;
+	public void setEventDate(Date eventDate) {
+		this.eventDate = eventDate;
 	}
 
-	public Date getSubmitted_at() {
-		return submitted_at;
+	public Date getSubmittedAt() {
+		return submittedAt;
 	}
 
-	public void setSubmitted_at(Date submitted_at) {
-		this.submitted_at = submitted_at;
+	public void setSubmittedAt(Date submittedAt) {
+		this.submittedAt = submittedAt;
+	}
+	
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
 	}
 
 	@Override
 	public String toString() {
-		return "Request [request_id=" + request_id + ", employee_id=" + employee_id + ", event_type_id=" + event_type_id
-				+ ", status_id=" + status_id + ", event_date=" + event_date + ", cost=" + cost + ", description="
-				+ description + ", location=" + location + ", submitted_at=" + submitted_at + ", grade=" + grade + "]";
+		return "Request [requestId=" + requestId + ", employeeId=" + employeeId + ", eventTypeId=" + eventTypeId
+				+ ", statusId=" + statusId + ", eventDate=" + eventDate + ", cost=" + cost + ", description="
+				+ description + ", location=" + location + ", submittedAt=" + submittedAt + ", grade=" + grade + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(cost, description, employee_id, event_date, event_type_id, grade, location, request_id,
-				status_id, submitted_at);
+		return Objects.hash(cost, description, employeeId, eventDate, eventTypeId, grade, location, requestId, statusId,
+				submittedAt);
 	}
 
 	@Override
@@ -121,20 +129,10 @@ public class Request {
 		if (getClass() != obj.getClass())
 			return false;
 		Request other = (Request) obj;
-		return cost == other.cost && Objects.equals(description, other.description) && employee_id == other.employee_id
-				&& Objects.equals(event_date, other.event_date) && event_type_id == other.event_type_id
+		return cost == other.cost && Objects.equals(description, other.description) && employeeId == other.employeeId
+				&& Objects.equals(eventDate, other.eventDate) && eventTypeId == other.eventTypeId
 				&& Objects.equals(grade, other.grade) && Objects.equals(location, other.location)
-				&& request_id == other.request_id && status_id == other.status_id
-				&& Objects.equals(submitted_at, other.submitted_at);
+				&& requestId == other.requestId && statusId == other.statusId
+				&& Objects.equals(submittedAt, other.submittedAt);
 	}
-
-
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
 }

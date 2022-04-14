@@ -86,19 +86,19 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Request editRequest(Request requestToEdit) {
-		Request request = requestDAO.getById(requestToEdit.getRequest_id());
+		Request request = requestDAO.getById(requestToEdit.getRequestId());
 		if(request != null) {
 			requestDAO.update(requestToEdit);
-			return requestDAO.getById(requestToEdit.getRequest_id());
+			return requestDAO.getById(requestToEdit.getRequestId());
 		}
 		return request;
 	}
 
 	@Override
 	public Request submitRequest(Request newRequest) throws RequestAlreadySubmittedException {
-		int request_id = requestDAO.create(newRequest);
-		if(request_id != 0) {
-			newRequest.setRequest_id(request_id);
+		int requestId = requestDAO.create(newRequest);
+		if(requestId != 0) {
+			newRequest.setRequestId(requestId);
 			return newRequest;
 		}else {
 			throw new RequestAlreadySubmittedException();

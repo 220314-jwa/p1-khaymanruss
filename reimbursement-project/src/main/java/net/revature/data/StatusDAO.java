@@ -4,8 +4,8 @@ import net.revature.models.Status;
 
 public interface StatusDAO extends GenericDAO<Status> {
 
-	public String getById(String status_name);
-	public int getByStatus_name(int status_id);
+	public String getById(String statusName);
+	public int getByStatusName(int statusId);
 	
 	
 }

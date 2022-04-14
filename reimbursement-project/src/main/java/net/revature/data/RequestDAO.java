@@ -7,7 +7,7 @@ import net.revature.models.Request;
 
 public interface RequestDAO extends GenericDAO<Request> {
 
-	public Request getById(int request_id);
+	public Request getById(int requestId);
 	//public int getByEmployee_id(int request_id);
 	
 	

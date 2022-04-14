@@ -20,7 +20,7 @@ public class EventTypeDAOImpl implements EventTypeDAO {
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, newObj.getEvent_type_name());
+			preparedStatement.setString(1, newObj.getEventTypeName());
 			
 			connection.setAutoCommit(false);
 			int count = preparedStatement.executeUpdate();
@@ -29,8 +29,8 @@ public class EventTypeDAOImpl implements EventTypeDAO {
 			if(count > 0) {
 				System.out.println("Event type added");
 				resultSet.next();
-				int event_type_id = resultSet.getInt(0);
-				newObj.setEvent_type_id(event_type_id);
+				int eventTypeId = resultSet.getInt(1);
+				newObj.setEventTypeId(eventTypeId);
 				connection.commit();
 			}
 			else {
@@ -52,17 +52,17 @@ public class EventTypeDAOImpl implements EventTypeDAO {
 			}
 		}
 		
-		return newObj.getEvent_type_id();
+		return newObj.getEventTypeId();
 	}
 
 	@Override
-	public EventType getById(int event_type_id) {
+	public EventType getById(int eventTypeId) {
 		EventType eventType = null;
 		String sql = "SELECT * FROM event_type WHERE event_type_id = ?";
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(0, event_type_id);
+			preparedStatement.setInt(1, eventTypeId);
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -79,21 +79,21 @@ public class EventTypeDAOImpl implements EventTypeDAO {
 	
 	private EventType parseResultSet(ResultSet resultSet) throws SQLException{
 		EventType eventType = new EventType();
-		eventType.setEvent_type_id(resultSet.getInt(0));
-		eventType.setEvent_type_name(resultSet.getString(1));
+		eventType.setEventTypeId(resultSet.getInt(1));
+		eventType.setEventTypeName(resultSet.getString(2));
 		return eventType;
 		//gotta figure out what to input into a parseResultSet method and if it is needed in
 		//my getById method
 	}
 
 	@Override
-	public String getByEvent_type_id(String event_type_name) {
+	public String getByEventTypeId(String eventTypeName) {
 		EventType eventType = null;
 		String sql = "SELECT * FROM event_type WHERE event_type_id = ?";
 		
 		try (Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(0, event_type_name);
+			preparedStatement.setString(1, eventTypeName);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -104,17 +104,17 @@ public class EventTypeDAOImpl implements EventTypeDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return event_type_name;
+		return eventTypeName;
 	}
 
 	@Override
-	public int getByEvent_type_name(int event_type_id) {
+	public int getByEventTypeName(int eventTypeId) {
 		EventType eventType = null;
 		String sql = "SELECT * FROM event_type WHERE event_type_name = ?";
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(0, event_type_id);
+			preparedStatement.setInt(1, eventTypeId);
 			//do the parameters need to be switched if I am trying to get the id?
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -126,7 +126,7 @@ public class EventTypeDAOImpl implements EventTypeDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return event_type_id;
+		return eventTypeId;
 	}
 
 	@Override

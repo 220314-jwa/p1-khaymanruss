@@ -31,21 +31,21 @@ public class RequestDAOImpl implements RequestDAO {
 			//also the return generated keys flag so that we can get that id that is generated
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			//set the fields
-			preparedStatement.setDate(4, new java.sql.Date(newObj.getEvent_date().getTime()));
+			preparedStatement.setDate(4, new java.sql.Date(newObj.getEventDate().getTime()));
 			preparedStatement.setLong(5, newObj.getCost());
 			preparedStatement.setString(6, newObj.getDescription());
 			preparedStatement.setString(7, newObj.getLocation());
-			preparedStatement.setDate(8, new java.sql.Date(newObj.getSubmitted_at().getTime()));
+			preparedStatement.setDate(8, new java.sql.Date(newObj.getSubmittedAt().getTime()));
 			preparedStatement.setString(9, newObj.getGrade());
 			//instantiating employeeDAO into Request
 			EmployeeDAO employeeDAO = DAOFactory.getEmployeeDAO();
 			//passing in the employeeDAO username string and returning the int employee_id
-			preparedStatement.setInt(1, employeeDAO.getByUsername(newObj.getEmployee_id()));
+			preparedStatement.setInt(1, employeeDAO.getByUsername(newObj.getEmployeeId()));
 			//instantiating
 			EventTypeDAO eventTypeDAO = DAOFactory.getEventTypeDAO();
-			preparedStatement.setInt(2, eventTypeDAO.getByEvent_type_name(newObj.getEvent_type_id()));
+			preparedStatement.setInt(2, eventTypeDAO.getByEventTypeName(newObj.getEventTypeId()));
 			StatusDAO statusDAO = DAOFactory.getStatusDAO();
-			preparedStatement.setInt(3, statusDAO.getByStatus_name(newObj.getStatus_id()));
+			preparedStatement.setInt(3, statusDAO.getByStatusName(newObj.getStatusId()));
 			
 			int count = preparedStatement.executeUpdate();
 			
@@ -55,7 +55,7 @@ public class RequestDAOImpl implements RequestDAO {
 				System.out.println("Request has been added");
 				resultSet.next();
 				int id = resultSet.getInt(1);
-				newObj.setRequest_id(id);;
+				newObj.setRequestId(id);;
 				connection.commit();
 			}
 			else {
@@ -76,11 +76,11 @@ public class RequestDAOImpl implements RequestDAO {
 				e.printStackTrace();
 			}
 		}
-		return newObj.getRequest_id();
+		return newObj.getRequestId();
 	}
 
 	@Override
-	public Request getById(int Request_id) {
+	public Request getById(int RequestId) {
 		Request request = null;
 		
 		String sql = "SELECT request_id, event_date, cost, description, location, submitted_at, grade FROM reimbursement_request" +
@@ -91,7 +91,7 @@ public class RequestDAOImpl implements RequestDAO {
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, Request_id);
+			preparedStatement.setInt(1, RequestId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -126,14 +126,14 @@ public class RequestDAOImpl implements RequestDAO {
 
 	private Request parseResultSet(ResultSet resultSet) throws SQLException{
 		Request request = new Request();
-		request.setEmployee_id(resultSet.getInt(1));
-		request.setEvent_type_id(resultSet.getInt(2));
-		request.setStatus_id(resultSet.getInt(3));
-		request.setEvent_date(resultSet.getDate(4));
+		request.setEmployeeId(resultSet.getInt(1));
+		request.setEventTypeId(resultSet.getInt(2));
+		request.setStatusId(resultSet.getInt(3));
+		request.setEventDate(resultSet.getDate(4));
 		request.setCost(resultSet.getLong(5));
 		request.setDescription(resultSet.getString(6));
 		request.setLocation(resultSet.getString(7));
-		request.setSubmitted_at(resultSet.getDate(8));
+		request.setSubmittedAt(resultSet.getDate(8));
 		request.setGrade(resultSet.getString(9));
 		return request;
 
@@ -146,17 +146,17 @@ public class RequestDAOImpl implements RequestDAO {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			
 			EmployeeDAO employeeDAO = DAOFactory.getEmployeeDAO();
-			preparedStatement.setInt(1, updateObj.getEmployee_id());
+			preparedStatement.setInt(1, updateObj.getEmployeeId());
 			EventTypeDAO eventTypeDAO = DAOFactory.getEventTypeDAO();
-			preparedStatement.setInt(2, updateObj.getEvent_type_id());
+			preparedStatement.setInt(2, updateObj.getEventTypeId());
 			StatusDAO statusDAO = DAOFactory.getStatusDAO();
-			preparedStatement.setInt(3, updateObj.getStatus_id());
-			preparedStatement.setDate(4, new java.sql.Date(updateObj.getEvent_date().getTime()));
+			preparedStatement.setInt(3, updateObj.getStatusId());
+			preparedStatement.setDate(4, new java.sql.Date(updateObj.getEventDate().getTime()));
 			//might be bad that i commented this out. just trying. nvm
 			preparedStatement.setLong(5, updateObj.getCost());
 			preparedStatement.setString(6, updateObj.getDescription());
 			preparedStatement.setString(7, updateObj.getDescription());
-			preparedStatement.setDate(8, new java.sql.Date(updateObj.getSubmitted_at().getTime()));
+			preparedStatement.setDate(8, new java.sql.Date(updateObj.getSubmittedAt().getTime()));
 			preparedStatement.setString(9, updateObj.getGrade());
 			
 			connection.setAutoCommit(false);
@@ -189,7 +189,7 @@ public class RequestDAOImpl implements RequestDAO {
 		String sql = "delete from request where request_id = ?;";
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(0, objToDelete.getRequest_id());
+			preparedStatement.setInt(1, objToDelete.getRequestId());
 			
 			connection.setAutoCommit(false);
 			int count = preparedStatement.executeUpdate();

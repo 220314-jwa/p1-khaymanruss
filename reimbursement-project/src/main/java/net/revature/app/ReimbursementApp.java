@@ -63,17 +63,17 @@ public class ReimbursementApp {
 	});
 	
 	app.get("/department/{id}", ctx ->{
-		int dept_id = Integer.parseInt(ctx.pathParam("id"));
+		int deptId = Integer.parseInt(ctx.pathParam("id"));
 		DepartmentDAO departmentDAO = DAOFactory.getDepartmentDAO();
-		Department department = departmentDAO.getById(dept_id);
+		Department department = departmentDAO.getById(deptId);
 		ctx.json(department);
 	});
 		
 		app.post("/employee", ctx ->{
 			Employee employee = ctx.bodyAsClass(net.revature.models.Employee.class);
 			EmployeeDAO employeeDAO = DAOFactory.getEmployeeDAO();
-			int employee_id = employeeDAO.create(employee);
-			ctx.result("the employee id is:" + employee_id);
+			int employeeId = employeeDAO.create(employee);
+			ctx.result("the employee id is:" + employeeId);
 		});
 	}
 }

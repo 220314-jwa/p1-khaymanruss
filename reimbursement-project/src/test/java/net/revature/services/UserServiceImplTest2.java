@@ -94,7 +94,7 @@ class UserServiceImplTest2 {
 	public void submitRequestAlreadyExists() throws SQLException {
 		//Employee testEmployee = new Employee();
 		Request testRequest = new Request();
-		testRequest.setStatus_id(1);
+		testRequest.setStatusId(1);
 		
 		//when(requestDAO.getById(testRequest.getRequest_id())).thenReturn(testRequest);
 		
@@ -113,7 +113,7 @@ class UserServiceImplTest2 {
 	@Test
 	public void editRequestSuccessfully() {
 		Request testRequest = new Request();
-		testRequest.setRequest_id(2);
+		testRequest.setRequestId(2);
 		testRequest.setGrade("A");
 		
 		when(requestDAO.getById(2)).thenReturn(testRequest);
@@ -128,7 +128,7 @@ class UserServiceImplTest2 {
 		when(requestDAO.getById(2)).thenReturn(null);
 		
 		Request testRequest = new Request();
-		testRequest.setRequest_id(2);
+		testRequest.setRequestId(2);
 		
 		Request actualRequest = userServ.editRequest(testRequest);
 		
@@ -142,6 +142,6 @@ class UserServiceImplTest2 {
 		when(requestDAO.create(testRequest)).thenReturn(1);
 		
 		Request result = userServ.submitRequest(testRequest);
-		assertNotEquals(0, result.getRequest_id());
+		assertNotEquals(0, result.getRequestId());
 	}
 }

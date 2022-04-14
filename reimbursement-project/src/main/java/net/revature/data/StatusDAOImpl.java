@@ -20,7 +20,7 @@ public class StatusDAOImpl implements StatusDAO {
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, newObj.getStatus_name());
+			preparedStatement.setString(1, newObj.getStatusName());
 			
 			connection.setAutoCommit(false);
 			int count = preparedStatement.executeUpdate();
@@ -30,8 +30,8 @@ public class StatusDAOImpl implements StatusDAO {
 				System.out.println("status added");
 				
 				resultSet.next();
-				int status_id = resultSet.getInt(0);
-				newObj.setStatus_id(status_id);
+				int statusId = resultSet.getInt(1);
+				newObj.setStatusId(statusId);
 				connection.commit();
 			}
 			else {
@@ -52,17 +52,17 @@ public class StatusDAOImpl implements StatusDAO {
 				e.printStackTrace();
 			}
 		}
-		return newObj.getStatus_id();
+		return newObj.getStatusId();
 	}
 
 	@Override
-	public Status getById(int status_id) {
+	public Status getById(int statusId) {
 		Status status = null;
 		String sql = "SELECT * FROM status WHERE status_id = ?";
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(0, status_id);
+			preparedStatement.setInt(1, statusId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -77,13 +77,13 @@ public class StatusDAOImpl implements StatusDAO {
 	}
 
 	@Override
-	public String getById(String status_name) {
+	public String getById(String statusName) {
 		Status status = null;
 		String sql = "SELECT * FROM status WHERE status_id = ?";
 		
 		try(Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, status_name);
+			preparedStatement.setString(1, statusName);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -94,16 +94,16 @@ public class StatusDAOImpl implements StatusDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return status_name;
+		return statusName;
 	}
 
 	@Override
-	public int getByStatus_name(int status_id) {
+	public int getByStatusName(int statusId) {
 		Status status = null;
 		String sql = "SELECT * FROM status WHERE status_name = ?";
 		try(Connection connection = ConnectionFactory.getConnection()){
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(0, status_id);
+			preparedStatement.setInt(1, statusId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -114,14 +114,14 @@ public class StatusDAOImpl implements StatusDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return status_id;
+		return statusId;
 	}
 	
 	private Status parseResultSet(ResultSet resultSet) throws SQLException {
 		Status status = new Status();
 		
-		status.setStatus_id(resultSet.getInt(0));
-		status.setStatus_name(resultSet.getString(1));
+		status.setStatusId(resultSet.getInt(1));
+		status.setStatusName(resultSet.getString(2));
 		
 		return status;
 	}

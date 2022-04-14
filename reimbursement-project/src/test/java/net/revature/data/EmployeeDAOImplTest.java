@@ -19,11 +19,11 @@ class EmployeeDAOImplTest {
 
 	@BeforeAll
 	public static void setUp() {
-		testEmployee.setfirst_name("test");
+		testEmployee.setfirstName("test");
 		testEmployee.setUsername("test1");
 		Random rand = new Random();
-		testNewEmployee.setfirst_name("test" + rand.nextLong());
-		testEmployee.setemployee_id(employeeDAO.create(testEmployee));
+		testNewEmployee.setfirstName("test" + rand.nextLong());
+		testEmployee.setemployeeId(employeeDAO.create(testEmployee));
 	}
 	@AfterAll
 	public static void cleanUp() {
@@ -33,7 +33,7 @@ class EmployeeDAOImplTest {
 	@Test
 	public void createEmployeeSuccessfully() {
 		int id = employeeDAO.create(testNewEmployee);
-		testNewEmployee.setemployee_id(id);
+		testNewEmployee.setemployeeId(id);
 		assertNotEquals(0, id);
 	}
 	@Test
@@ -44,8 +44,8 @@ class EmployeeDAOImplTest {
 	@Test
 	public void getByIdExists() {
 		
-		int employee_id = testEmployee.getemployee_id();
-		Employee employee = employeeDAO.getById(employee_id);
+		int employeeId = testEmployee.getemployeeId();
+		Employee employee = employeeDAO.getById(employeeId);
 		
 		assertEquals(testEmployee, employee);
 	}
@@ -83,7 +83,7 @@ class EmployeeDAOImplTest {
 	
 	@Test
 	public void getByEmployee_idExists() {
-		Employee employee = employeeDAO.getByEmployee_id("test1");
+		Employee employee = employeeDAO.getByEmployeeId("test1");
 		assertEquals(testEmployee, employee);
 	}
 }

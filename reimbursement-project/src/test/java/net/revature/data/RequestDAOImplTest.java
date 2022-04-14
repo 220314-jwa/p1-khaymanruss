@@ -26,10 +26,10 @@ class RequestDAOImplTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass(){
-		testRequest.setEmployee_id(123);
+		testRequest.setEmployeeId(123);
 		Random rand = new Random();
-		testNewRequest.setRequest_id(123 + rand.nextInt());
-		testRequest.setRequest_id(requestDAO.create(testRequest));
+		testNewRequest.setRequestId(123 + rand.nextInt());
+		testRequest.setRequestId(requestDAO.create(testRequest));
 	}
 	@AfterAll
 	public static void cleanup() throws SQLException{
@@ -46,14 +46,14 @@ class RequestDAOImplTest {
 	@Test
 	public void createRequestSuccessfully() {
 		int id = requestDAO.create(testNewRequest);
-		testNewRequest.setRequest_id(id);
+		testNewRequest.setRequestId(id);
 		
 		assertNotEquals(0, id);
 	}
 
 	@Test
 	public void getByIdExists() {
-		int id = testRequest.getRequest_id();
+		int id = testRequest.getRequestId();
 		Request request = requestDAO.getById(id);
 		assertEquals(testRequest, request);
 	}

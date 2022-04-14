@@ -21,10 +21,10 @@ class EventTypeDAOImplTest {
 	
 	@BeforeAll
 	public static void setUp() {
-		testEventType.setEvent_type_name("test");
+		testEventType.setEventTypeName("test");
 		Random rand = new Random();
-		testNewEventType.setEvent_type_name("test" + rand.nextLong());
-		testEventType.setEvent_type_id(eventTypeDAO.create(testEventType));
+		testNewEventType.setEventTypeName("test" + rand.nextLong());
+		testEventType.setEventTypeId(eventTypeDAO.create(testEventType));
 	}
 	@AfterAll
 	public static void cleanUp() throws SQLException{
@@ -33,7 +33,7 @@ class EventTypeDAOImplTest {
 
 	@Test
 	public void getByEventTypeIdExists() {
-		int id = testEventType.getEvent_type_id();
+		int id = testEventType.getEventTypeId();
 		EventType eventType = eventTypeDAO.getById(id);
 		assertEquals(testEventType, eventType);
 	}

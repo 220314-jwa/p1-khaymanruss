@@ -19,10 +19,10 @@ class DepartmentDAOImplTest {
 	
 	@BeforeAll
 	public static void setUp() throws SQLException {
-		testDept.setDept_name("test");
+		testDept.setDeptName("test");
 		Random rand = new Random();
-		testNewDept.setDept_name("test_" + rand.nextLong());
-		testDept.setDept_head_id(departmentDAO.create(testDept));
+		testNewDept.setDeptName("test_" + rand.nextLong());
+		testDept.setDeptHeadId(departmentDAO.create(testDept));
 	}
 	@AfterAll
 	public static void cleanUp() throws SQLException {
@@ -58,7 +58,7 @@ class DepartmentDAOImplTest {
 */
 	@Test
 	public void getByIdExists() {
-		int id = testDept.getDept_id();
+		int id = testDept.getDeptId();
 		Department department = departmentDAO.getById(id);
 		assertEquals(testDept, department);
 	}

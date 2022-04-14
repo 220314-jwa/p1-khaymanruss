@@ -5,34 +5,35 @@ import java.util.Objects;
 public class EventType {
 
 
-	private int event_type_id;
-	private String event_type_name;
+	
+	private int eventTypeId;
+	private String eventTypeName;
 	
 	public EventType() {
-		event_type_id = 0;
-		event_type_name = "";
+		eventTypeId = 0;
+		eventTypeName = "";
 	}
-	public int getEvent_type_id() {
-		return event_type_id;
+	public int getEventTypeId() {
+		return eventTypeId;
 	}
-	public void setEvent_type_id(int event_type_id) {
-		this.event_type_id = event_type_id;
+	public void setEventTypeId(int eventTypeId) {
+		this.eventTypeId = eventTypeId;
 	}
-	public String getEvent_type_name() {
-		return event_type_name;
+	public String getEventTypeName() {
+		return eventTypeName;
 	}
-	public void setEvent_type_name(String event_type_name) {
-		this.event_type_name = event_type_name;
+	public void setEventTypeName(String eventTypeName) {
+		this.eventTypeName = eventTypeName;
 	}
 	
 	@Override
 	public String toString() {
-		return "EventType [event_type_id=" + event_type_id + ", event_type_name=" + event_type_name + "]";
+		return "EventType [eventTypeId=" + eventTypeId + ", eventTypeName=" + eventTypeName + "]";
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(event_type_id, event_type_name);
+		return Objects.hash(eventTypeId, eventTypeName);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -43,6 +44,6 @@ public class EventType {
 		if (getClass() != obj.getClass())
 			return false;
 		EventType other = (EventType) obj;
-		return event_type_id == other.event_type_id && Objects.equals(event_type_name, other.event_type_name);
+		return eventTypeId == other.eventTypeId && Objects.equals(eventTypeName, other.eventTypeName);
 	}
 }

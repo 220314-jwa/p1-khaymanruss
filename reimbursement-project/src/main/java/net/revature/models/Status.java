@@ -3,36 +3,36 @@ package net.revature.models;
 import java.util.Objects;
 
 public class Status {
-	private int status_id;
-	private String status_name;
+	private int statusId;
+	private String statusName;
 	
 	
 	public Status() {
-		status_id = 0;
-		status_name = "";
+		statusId = 0;
+		statusName = "";
 		
 	}
-	public int getStatus_id() {
-		return status_id;
+	public int getStatusId() {
+		return statusId;
 	}
-	public void setStatus_id(int status_id) {
-		this.status_id = status_id;
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
-	public String getStatus_name() {
-		return status_name;
+	public String getStatusName() {
+		return statusName;
 	}
-	public void setStatus_name(String status_name) {
-		this.status_name = status_name;
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
 	}
 	
 	@Override
 	public String toString() {
-		return "Status [status_id=" + status_id + ", status_name=" + status_name + "]";
+		return "Status [status_id=" + statusName + ", status_name=" + statusName + "]";
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(status_id, status_name);
+		return Objects.hash(statusName, statusName);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -43,7 +43,7 @@ public class Status {
 		if (getClass() != obj.getClass())
 			return false;
 		Status other = (Status) obj;
-		return status_id == other.status_id && Objects.equals(status_name, other.status_name);
+		return statusName == other.statusName && Objects.equals(statusName, other.statusName);
 	}
 
 }
