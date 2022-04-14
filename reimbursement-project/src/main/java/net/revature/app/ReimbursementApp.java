@@ -1,6 +1,11 @@
 package net.revature.app;
 
+import java.util.Map;
+
+import com.revature.exceptions.IncorrectCredentialsException;
+
 import io.javalin.Javalin;
+import io.javalin.http.HttpCode;
 import net.revature.data.DAOFactory;
 import net.revature.data.DepartmentDAO;
 import net.revature.data.EmployeeDAO;
@@ -9,8 +14,12 @@ import net.revature.models.Department;
 import net.revature.models.Employee;
 import net.revature.models.Request;
 import net.revature.services.ConnectionFactory;
+import net.revature.services.UserService;
+import net.revature.services.UserServiceImpl;
 
 public class ReimbursementApp {
+	
+	private static UserService userServ = new UserServiceImpl();
 
 	public static void main(String[] args) {
 		Javalin app;
@@ -27,6 +36,19 @@ public class ReimbursementApp {
 			System.out.println(request);
 			ctx.result("the request is working");
 	});
+		
+		app.post("/auth", ctx -> {
+			Map<String, String> credentials = ctx.bodyAsClass(Map.class);
+			String username = credentials.get("username");
+			String password = credentials.get("password");
+			
+			try {
+				Employee employee = userServ.logIn(username, password);
+				ctx.json(employee);
+			}catch (IncorrectCredentialsException e) {
+				ctx.status(HttpCode.UNAUTHORIZED);
+			}
+		});
 	
 	app.get("/employee", ctx ->{
 		Employee employee = new Employee();
