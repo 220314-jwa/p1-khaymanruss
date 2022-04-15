@@ -25,13 +25,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Employee logIn(String username, String password) throws IncorrectCredentialsException {
 		Employee employee = employeeDAO.getByUsername(username);
-		if(employee != null && employee.getPassword().equals(password)) {
+		if(employee != null && employee.getpassword().equals(password)) {
 			return employee;
 		}else {
 			throw new IncorrectCredentialsException();
-		}
+		} 
 		
 	}
+	
 
 	/*
 	@Override
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService{
 		List<Request> requests = requestDAO.getAll();
 		return requests;
 	}
-
+	
 
 	@Override
 	public Request editRequest(Request requestToEdit) {

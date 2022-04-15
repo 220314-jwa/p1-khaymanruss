@@ -20,7 +20,7 @@ class EmployeeDAOImplTest {
 	@BeforeAll
 	public static void setUp() {
 		testEmployee.setfirstName("test");
-		testEmployee.setUsername("test1");
+		testEmployee.setusername("test1");
 		Random rand = new Random();
 		testNewEmployee.setfirstName("test" + rand.nextLong());
 		testEmployee.setemployeeId(employeeDAO.create(testEmployee));

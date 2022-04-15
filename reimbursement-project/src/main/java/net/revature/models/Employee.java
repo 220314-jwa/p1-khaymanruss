@@ -9,20 +9,20 @@ public class Employee {
 
 
 	private int employeeId;
-	private String username;
-	private String password;
 	private String firstName;
 	private String lastName;
+	private String username;
+	private String password;
 	private int managerId;
 	private int deptId;
 	
 	
 	public Employee() {
 		employeeId = 0;
-		username = "khayman";
-		password = "pass";
 		firstName = "";
 		lastName = "";
+		username = "khayman";
+		password = "pass";
 		managerId = 0;
 		deptId = 0;
 		
@@ -61,22 +61,22 @@ public class Employee {
 	}
 
 
-	public String getUsername() {
+	public String getusername() {
 		return username;
 	}
 
 
-	public void setUsername(String username) {
+	public void setusername(String username) {
 		this.username = username;
 	}
 
 
-	public String getPassword() {
+	public String getpassword() {
 		return password;
 	}
 
 
-	public void setPassword(String password) {
+	public void setpassword(String password) {
 		this.password = password;
 	}
 	

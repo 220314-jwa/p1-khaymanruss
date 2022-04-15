@@ -1,8 +1,11 @@
 package net.revature.app;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.revature.exceptions.IncorrectCredentialsException;
+import com.revature.exceptions.RequestAlreadySubmittedException;
 
 import io.javalin.Javalin;
 import io.javalin.http.HttpCode;
@@ -22,11 +25,27 @@ public class ReimbursementApp {
 	private static UserService userServ = new UserServiceImpl();
 
 	public static void main(String[] args) {
-		Javalin app;
+		
 		//set up javalin object
-		app = Javalin.create();
+		Javalin app = Javalin.create((config) ->{
+			config.enableCorsForAllOrigins();});
+
 		
 		app.start(8081);
+		
+		app.post("/submit", ctx ->{
+			try {
+				
+				Request newRequest = ctx.bodyAsClass(Request.class);
+				
+				newRequest = userServ.submitRequest(newRequest);
+				ctx.json(newRequest);
+			}catch (RequestAlreadySubmittedException e) {
+			
+				e.printStackTrace();
+			
+			}
+		});
 		
 		//app.get("/form", )
 		app.post("/request", ctx ->{
@@ -40,15 +59,35 @@ public class ReimbursementApp {
 		app.post("/auth", ctx -> {
 			Map<String, String> credentials = ctx.bodyAsClass(Map.class);
 			String username = credentials.get("username");
+			System.out.println(username);
 			String password = credentials.get("password");
+			System.out.println(password);
 			
-			try {
 				Employee employee = userServ.logIn(username, password);
+				if(employee != null) {
 				ctx.json(employee);
-			}catch (IncorrectCredentialsException e) {
+				}else {
+					
 				ctx.status(HttpCode.UNAUTHORIZED);
 			}
 		});
+		
+//		app.post("/login", ctx -> {
+//			Map<String, String> credentials = ctx.bodyAsClass(Map.class);
+//			String username = credentials.get("username");
+//			System.out.println(username);
+//			String password = credentials.get("password");
+//			System.out.println(password);
+//
+//			Employee employee = userService.logIn(username, password);
+//
+//			if (employee != null) {
+//				ctx.json(employee);
+//			} else {
+//				ctx.status(HttpCode.UNAUTHORIZED);
+//			}
+//		});
+
 	
 	app.get("/employee", ctx ->{
 		Employee employee = new Employee();
@@ -68,7 +107,15 @@ public class ReimbursementApp {
 		Department department = departmentDAO.getById(deptId);
 		ctx.json(department);
 	});
+	app.get("/requests", ctx->{
+		List<Request> requests = userServ.viewRequests();
+		ctx.json(requests);
+	});
 		
+
+	
+	
+	
 		app.post("/employee", ctx ->{
 			Employee employee = ctx.bodyAsClass(net.revature.models.Employee.class);
 			EmployeeDAO employeeDAO = DAOFactory.getEmployeeDAO();

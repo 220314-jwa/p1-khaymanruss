@@ -11,11 +11,11 @@ public class Request {
 	private int employeeId;
 	private int eventTypeId;
 	private int statusId;
-	private Date eventDate;
+	private long eventDate;
 	private long cost;
 	private String description;
 	private String location;
-	private Date submittedAt;
+	private long submittedAt;
 	private String grade;
 	
 	public Request() {
@@ -23,11 +23,11 @@ public class Request {
 		employeeId = 0;
 		eventTypeId = 0;
 		statusId = 0;
-		eventDate = new Date();
+		eventDate = 0;
 		cost = 0;
 		description = "";
 		location = "";
-		submittedAt = new Date();
+		submittedAt = 0;
 		grade = "";
 		
 	}
@@ -83,19 +83,19 @@ public class Request {
 		this.statusId = statusId;
 	}
 
-	public Date getEventDate() {
+	public long getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Date eventDate) {
+	public void setEventDate(long eventDate) {
 		this.eventDate = eventDate;
 	}
 
-	public Date getSubmittedAt() {
+	public long getSubmittedAt() {
 		return submittedAt;
 	}
 
-	public void setSubmittedAt(Date submittedAt) {
+	public void setSubmittedAt(long submittedAt) {
 		this.submittedAt = submittedAt;
 	}
 	
@@ -130,9 +130,8 @@ public class Request {
 			return false;
 		Request other = (Request) obj;
 		return cost == other.cost && Objects.equals(description, other.description) && employeeId == other.employeeId
-				&& Objects.equals(eventDate, other.eventDate) && eventTypeId == other.eventTypeId
+				&& eventDate == other.eventDate && eventTypeId == other.eventTypeId
 				&& Objects.equals(grade, other.grade) && Objects.equals(location, other.location)
-				&& requestId == other.requestId && statusId == other.statusId
-				&& Objects.equals(submittedAt, other.submittedAt);
+				&& requestId == other.requestId && statusId == other.statusId && submittedAt == other.submittedAt;
 	}
 }

@@ -53,8 +53,8 @@ class UserServiceImplTest2 {
 		//assertNotNull(username, result.getUsername());
 		
 		Employee mockEmployee = new Employee();
-		mockEmployee.setUsername(username);
-		mockEmployee.setPassword(password);
+		mockEmployee.setusername(username);
+		mockEmployee.setpassword(password);
 		
 		when(employeeDAO.getByUsername(username)).thenReturn(mockEmployee);
 		

@@ -23,16 +23,16 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	public int create(Employee newObj) {
 		Connection connection = ConnectionFactory.getConnection();
 		try {
-			String sql = "INSERT into employee (employee_id, username, password, first_name, last_name, manager_id, dept_id)"
+			String sql = "INSERT into employee (employee_id, first_name, last_name, username, password, manager_id, dept_id)"
 					+ " values (default, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, newObj.getUsername());
-			preparedStatement.setString(2,  newObj.getPassword());
-			preparedStatement.setString(3, newObj.getfirstName());
-			preparedStatement.setString(4, newObj.getlastName());
-			preparedStatement.setInt(5, newObj.getmanagerId());
+			preparedStatement.setString(4, newObj.getusername());
+			preparedStatement.setString(5,  newObj.getpassword());
+			preparedStatement.setString(2, newObj.getfirstName());
+			preparedStatement.setString(3, newObj.getlastName());
+			preparedStatement.setInt(6, newObj.getmanagerId());
 			DepartmentDAO departmentDAO = DAOFactory.getDepartmentDAO();
-			preparedStatement.setInt(6, departmentDAO.getByDeptId(newObj.getdeptId()));
+			preparedStatement.setInt(7, departmentDAO.getByDeptId(newObj.getdeptId()));
 			
 			connection.setAutoCommit(false);
 			preparedStatement.executeUpdate();
@@ -129,10 +129,10 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 		try {
 			String sql = "update employee set first_name = ?, last_name = ?, username = ?, password = ?, WHERE employee_id = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, updateObj.getUsername());
-			preparedStatement.setString(2, updateObj.getPassword());
-			preparedStatement.setString(3, updateObj.getfirstName());
-			preparedStatement.setString(4, updateObj.getlastName());
+			preparedStatement.setString(3, updateObj.getusername());
+			preparedStatement.setString(4, updateObj.getpassword());
+			preparedStatement.setString(1, updateObj.getfirstName());
+			preparedStatement.setString(2, updateObj.getlastName());
 			preparedStatement.setInt(5, updateObj.getmanagerId());
 			preparedStatement.setInt(6, updateObj.getdeptId());
 			
@@ -226,7 +226,8 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	@Override
 	public int getByUsername(int employeeId) {
 		Employee employee = null;
-		String sql = "Select * from employee left join dept_id on department.id=department.dept_id where username = ?";
+		String sql = "Select * from employee where username = ?";
+		//left join dept_id on department.id=department.dept_id
 				try(Connection connection = ConnectionFactory.getConnection()){
 					
 					PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -258,15 +259,16 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	@Override
 	public Employee getByUsername(String username) {
 		Employee employee = null;
-		String sql = "Select * from employee left join dept_id on department.id=department.dept_id where username = ?";
+		String sql = "Select * from employee where username = ?";
+		//left join dept_id on employee.dept_id=department.dept_id 
 		try(Connection connection = ConnectionFactory.getConnection()){
 			
 			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(3, username);
+			preparedStatement.setString(1, username);
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				employee = parseResultSet(resultSet);
+				employee = EmployeeDAOImpl.parseResultSet(resultSet);
 			}else {
 				System.out.println("something went wrong getting username");
 			}
@@ -280,13 +282,13 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	private static Employee parseResultSet(ResultSet resultSet) {
 		Employee employee = new Employee();
 		try {
-			employee.setemployeeId(resultSet.getInt(0));
-			employee.setfirstName(resultSet.getString(1));
-			employee.setlastName(resultSet.getString(2));
-			employee.setUsername(resultSet.getString(3));
-			employee.setPassword(resultSet.getString(4));
-			employee.setmanagerId(resultSet.getInt(5));
-			employee.setdeptId(resultSet.getInt(6));
+			employee.setemployeeId(resultSet.getInt(1));
+			employee.setfirstName(resultSet.getString(2));
+			employee.setlastName(resultSet.getString(3));
+			employee.setusername(resultSet.getString(4));
+			employee.setpassword(resultSet.getString(5));
+			employee.setmanagerId(resultSet.getInt(6));
+			employee.setdeptId(resultSet.getInt(7));
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
