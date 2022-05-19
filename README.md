@@ -1,43 +1,42 @@
 # Java with Automation Foundations Project
 
-For this project, you will be creating a full-stack application. There will be two different primary deadlines:
-
-- **April 6th** Back end unit tests complete, at least 3 endpoints functional
-- **April 15th** Final deadline including front end
-
-The biggest priority for this application is testing! If you have everything working but you have not completed the testing requirements (JUnit, Mockito, Selenium), you **DO NOT** have a sufficient project. When considering how you want to manage your time, make sure that you will have your tests completed either early or as you go.
-
-## About the Application
-
-You will be creating one of these two applications:
-
 ### TRMS: Tuition Reimbursement Management System
 
 Tuition Reimbursement Management System is an application which allows employees at a company to submit requests for reimbursement. If the employee decides to take a certification exam or attend a class, the company may reimburse them for the cost after they submit a request. Managers can then go into the application and approve or reject requests.
 
-### SPMS: Story Pitch Management System
 
-Story Pitch Management System is an application which allows authors to submit pitches for stories to the publishing company. They can write a small description of the story they hope to write, and editors can go into the application and approve or reject story pitches based on whether they sound interesting or even suggest changes before approval.
+**Technologies Used**
+1. DBeaver version 22.0
+2. PostgreSQL version 14.2
+3. Java SE version 1.8
+4. HTML/CSS
+5. Eclipse IDE version 4.22.0
+6. VS Code version 1.66.2
+7. Postman version 9.17
+8. JUnit version 5.8.2
+9. Mockito version 4.5.1
 
-## Technical Requirements
+**Features**
+List of features and TODOs for future development
+-Users can submit reimbursement request for funds used for classes or certifications
+-Users can view if their request was accepted or denied
+-Users can grade a Manager's approval or rejection
 
-1. Data must be stored and retrieved from a PostgreSQL database (local or AWS).
-2. Data access in Java will be performed using JDBC DAOs.
-3. HTTP handling in Java will be done using Javalin.
-4. Service layers must be fully unit tested using JUnit and Mockito.
-5. DAOs are fully unit tested using JUnit.
-6. Front end must be written using HTML, CSS, and JavaScript (no libraries/frameworks for JS. Styling libraries like Bootstrap are fine).
-7. At least one feature must have an automation test written using Selenium.
+To-do list:
+-Complete the connection of the front end to backend
+-Distinguish heirarchy for Users(Employees, Managers, Dept. Heads)
 
-## Functional Requirements
+**Getting Started**
 
-[TRMS Specifications](./p1-specs/TRMS.md)
+Requirements
+1. Download and Install Visual Studio Code and Eclipse IDE by following these links bellow (the links have specific instruction for your preferred OS :
+https://www.eclipse.org/ide/
 
-[SPMS Specifications](./p1-specs/SPMS.md)
+https://code.visualstudio.com/
 
-## Bonus Requirements
-
-1. Use JWTs for session management.
-2. Use at least one Cucumber feature file.
-3. Use the POM design pattern for your Selenium test(s).
-4. Implement file attachments for requests/pitches.
+Setting up the Environment and Getting Started 
+2. Clone the repository by using the following command. You can run the command on Terminal on (Linux, MAC) and Command Prompt(Windows).
+https://github.com/220314-jwa/p1-khaymanruss
+3. Run Eclipse and import the project as a Maven Java project.
+4. Open the package that is named com.revature.reimbursementproject.
+5. Run the ReimbursementApp.java as a java application.
